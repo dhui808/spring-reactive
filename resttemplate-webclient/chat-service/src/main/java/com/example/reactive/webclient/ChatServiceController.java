@@ -13,8 +13,8 @@ public class ChatServiceController {
     private List<Chat> getAllTweets() throws Exception {
         Thread.sleep(1000);
         return Arrays.asList(
-          new Chat("World Cup 2022", "@user1"),
+          new Chat("World Cup 2022 ᘘ", "@user1"),
           new Chat("Leo Messi", "@user2"),
-          new Chat("Spring WebClient", "@user3"));
+          new Chat("Spring WebClient ᘘ", "@user3"));
     }
 }

@@ -17,13 +17,13 @@ public class WebController {
     @Autowired
     private MyService service;
 
-    @GetMapping("/chat-blocking")
+    @GetMapping(value="/chat-blocking", produces = "application/json;charset=UTF-8")
     public List<JsonNode> getChatBlocking() {
 
         return service.getChatBlocking();
     }
 
-    @GetMapping(value = "/chat-non-blocking", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "/chat-non-blocking", produces = MediaType.APPLICATION_JSON_VALUE)
     public Flux<JsonNode> getChatNonBlocking() {
 
         return service.getChatNonBlocking();
