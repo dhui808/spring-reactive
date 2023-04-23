@@ -5,9 +5,10 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import lombok.Data;
@@ -16,10 +17,10 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
-@RestController
+@Component
 @Slf4j
 @Data
-public class TrueclientipDemoWebClientCommanLineRunner implements CommandLineRunner {
+public class TrueclientipScheduledTasks {
 
 	@Value("${host}")
 	String host;
@@ -33,43 +34,19 @@ public class TrueclientipDemoWebClientCommanLineRunner implements CommandLineRun
 	@Value("${firstname:Joe}")
 	String firstname;
 	
+	@Value("${cron.schedule}")
+	String cronSchedule;
+	
 	WebClient webClient;
 	
-	public TrueclientipDemoWebClientCommanLineRunner(WebClient.Builder webClientBuilder) {
+	public TrueclientipScheduledTasks(WebClient.Builder webClientBuilder) {
 		this.webClient = webClientBuilder.baseUrl("http://localhost:8080").build();
+		log.info("cron.schedule=" + cronSchedule);
 	}
 	
-	@Override
-	public void run(String... args) throws Exception {
+	@Scheduled(cron="${cron.schedule}")
+	public void runAtTheScheduledTime() throws Exception {
 		makeCall(count, clientIp, firstname);
-	}
-
-	@GetMapping("/")
-	public String callServer(@RequestParam("volume") Optional<Integer> volume,
-			@RequestParam("ip") Optional<String> ip,
-			@RequestParam("name") Optional<String> name) {
-		
-		int size = count;
-	    if ( volume.isPresent()){
-	    	size = volume.get();
-	    	if (0 == size) {
-	    		size = count;
-	    	}
-	    } 
-	    
-	    String ipAddr = clientIp;
-	    if (ip.isPresent()) {
-	    	ipAddr = ip.get();
-	    }
-	    
-	    String fn = firstname;
-	    if (name.isPresent()) {
-	    	fn = name.get();
-	    }
-	    
-	    String s = makeCall(size, ipAddr, fn);
-	    
-	    return s;
 	}
 
 	private String makeCall(int size, String ipAddr, String name) {

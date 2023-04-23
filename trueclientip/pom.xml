@@ -11,5 +11,6 @@
   	<module>trueclientip-client</module>
 	<module>trueclientip-server</module>
 	<module>trueclientip-webclient</module>
+	<module>trueclientip-scheduled-webclient</module>
   </modules>
 </project>
