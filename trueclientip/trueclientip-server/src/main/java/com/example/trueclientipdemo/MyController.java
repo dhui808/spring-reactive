@@ -20,10 +20,6 @@ public class MyController {
 
 	@RequestMapping("/getClientIp")
 	public String getClientIp(@RequestParam("name") String name) {
-		try {
-			Thread.sleep(1000);
-		} catch (Exception e) {
-		}
 
 		String clientIp = request.getHeader("True-Client-IP");
 
