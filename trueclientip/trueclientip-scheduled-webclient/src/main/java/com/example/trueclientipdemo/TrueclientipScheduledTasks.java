@@ -41,7 +41,7 @@ public class TrueclientipScheduledTasks {
 	
 	public TrueclientipScheduledTasks(WebClient.Builder webClientBuilder) {
 		this.webClient = webClientBuilder.baseUrl("http://localhost:8080").build();
-		log.info("cron.schedule=" + cronSchedule);
+		//log.info("cron.schedule=" + cronSchedule);
 	}
 	
 	@Scheduled(cron="${cron.schedule}")
@@ -51,14 +51,14 @@ public class TrueclientipScheduledTasks {
 
 	private String makeCall(int size, String ipAddr, String name) {
 		
-		log.info("Making "+ size + " calls...");
-		log.info("ipAddr=" + ipAddr + " name=" + name);
+		//log.info("Making "+ size + " calls...");
+		//log.info("ipAddr=" + ipAddr + " name=" + name);
 		
         createFlux(size, ipAddr, name)
         .parallel()
         .runOn(Schedulers.parallel())
         .flatMap(this::getFeedResponse)       // Flux<Feed>    
-        .subscribe(t -> log.info("" + t));
+        .subscribe(t -> {});
 		
 		return "success";
 	}
