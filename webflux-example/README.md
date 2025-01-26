@@ -2,6 +2,13 @@
 
 The server will start at http://localhost:8080.
 
+### Docker Postres Image Usage
+	--name postgres					Container name is postgres
+	-e POSTGRES_PASSWORD=postgres	Environment variable POSTGRES_PASSWORD
+	-p 5432:5432					Port
+	-d, --detach					Run container in background and print container ID
+	postgres						Docker Postgres name is postgres
+
 ## Prerequisites
 
 	* JAVA 8 should be installed
@@ -10,9 +17,10 @@ The server will start at http://localhost:8080.
 	To start Postgresql:
 	docker run --name postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres
 	docker ps
-	docker cp schema.sql f9baabe899cb:/schema.sql
+	docker cp src/main/resources/schema.sql f9baabe899cb:/schema.sql
 	docker exec -it postgres /bin/bash
-	psql -d test -a -f /schema.sql
+	createdb -U postgres test
+	psql -U postgres -d test -a -f /schema.sql
 	
 ## Build
 ```
